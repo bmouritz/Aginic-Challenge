@@ -12,7 +12,7 @@ def main(amount, file_name):
 # Create the tickets
 def create_tickets(amount):
     dates = get_dates()
-    ticket_number = randrange(1000)
+    agent_id = randrange(10000, 100000)
     data = {'metadata': {
         'start_at': dates['start_at'],
         'end_at': dates['end_at'],
@@ -21,28 +21,29 @@ def create_tickets(amount):
 
     # For amount of tickets requested, make real data
     for i in range(int(amount)):
-        data['activities_data'].append(populate_activities(i, ticket_number))
+        data['activities_data'].append(populate_activities(i, agent_id))
 
     return data
 
 
 # Creating the activities_data metadata and activity
-def populate_activities(x, ticket_number):
+def populate_activities(x, agent_id):
     date = get_dates()
+    ticket_number = randrange(10000)
     performer = randrange(140000, 150000)
     activities_data = {
         'performed_at': date['in_between'],
         'ticket_id': ticket_number + x,
         'performer_type': "user",
         'performer_id': performer,
-        'activity': populate_activity(performer)
+        'activity': populate_activity(performer, agent_id)
     }
 
     return activities_data
 
 
 # Create activity
-def populate_activity(performer):
+def populate_activity(performer, agent_id):
     id_range = randrange(1000000, 100000000)
     ranges = randrange(10000, 100000)
     notes_required = randrange(2)
@@ -58,7 +59,7 @@ def populate_activity(performer):
         "status": status_choice(),
         "priority": random_range(),
         "group": "refund",
-        "agent_id": performer,
+        "agent_id": agent_id,
         "requester": ranges,
         "product": "mobile"
     }
