@@ -5,7 +5,7 @@ SELECT activities_data.ticket_id,
 	MAX(CASE WHEN status = "Waiting for Customer" THEN (strftime('%s', activities_data.performed_at) - strftime('%s', min_response.minstart_at)) / 3600 ELSE 0 END) AS time_spent_waiting_on_customer,
 	/* Get Pending status and check time pending */
 	MAX(CASE WHEN status = "Pending" THEN (strftime('%s', activities_data.performed_at) - strftime('%s', min_response.minstart_at)) / 3600 ELSE 0 END) AS time_spent_waiting_for_response,
-	/* Get Resolved status and check time */
+	/* Get Resolved status and check time before being resolved */
 	MAX(CASE WHEN status = "Resolved" THEN (strftime('%s', activities_data.performed_at) - strftime('%s', min_response.minstart_at)) / 3600 ELSE 0 END) AS time_till_resolution,
 	/* Get earliest response time and check first time of activity */
 	MIN((strftime('%s', activities_data.performed_at) - strftime('%s', min_response.minstart_at)) / 3600) AS time_to_first_response 
